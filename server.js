@@ -5,6 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const http = require('http');
+const fs = require('fs');
+
+const INDEX_HTML = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
 
 const integrationsStore = require('./src/integrations-data');
 const crmStore = require('./src/crm-store');
@@ -222,7 +225,10 @@ app.post('/api/agent/managed-session', async (req, res) => {
 
 // Fallback to SPA for any unmatched GET route
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  if (req.method !== 'GET') {
+    return res.status(404).json({ error: 'Endpoint not found' });
+  }
+  res.type('html').send(INDEX_HTML);
 });
 
 let serverInstance = null;

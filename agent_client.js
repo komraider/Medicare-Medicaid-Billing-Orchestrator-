@@ -13,6 +13,7 @@
  *  5. Handle session.status_idle to finish and errors to exit cleanly
  */
 
+const crypto = require('crypto');
 const Anthropic = require('@anthropic-ai/sdk');
 const { answerBillingQuery } = require('./src/billing-engine');
 
@@ -122,7 +123,7 @@ async function runManagedAgentSession(userMessage, options = {}) {
     }
   } else {
     // High-fidelity sandbox simulation when ANTHROPIC_API_KEY is not configured
-    const simulatedSessionId = `sesn_01${Math.random().toString(36).substring(2, 10)}${Date.now().toString(36)}`;
+    const simulatedSessionId = `sesn_01${crypto.randomBytes(6).toString('hex')}`;
     const result = answerBillingQuery(userMessage, {
       name: 'Eleanor Vance',
       mbi: '1EG4-TE5-MK72',

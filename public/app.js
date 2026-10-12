@@ -648,7 +648,9 @@ document.addEventListener('DOMContentLoaded', () => {
     escaped = escaped.replace(/#### (.*$)/gim, '<h4 style="font-size: 0.85rem; color: #1e293b; margin-top: 0.45rem; margin-bottom: 0.2rem;">$1</h4>');
     escaped = escaped.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
     escaped = escaped.replace(/^\- (.*$)/gim, '<li>$1</li>');
-    escaped = escaped.replace(/(<li>.*<\/li>)/gims, '<ul style="margin: 0.35rem 0 0.5rem 1rem;">$1</ul>');
+    escaped = escaped.replace(/(?:<li>.*?<\/li>\s*)+/gim, (match) => {
+      return `<ul style="margin: 0.35rem 0 0.5rem 1rem;">${match}</ul>`;
+    });
     escaped = escaped.replace(/\n\n/g, '<br/><br/>');
     return escaped;
   }

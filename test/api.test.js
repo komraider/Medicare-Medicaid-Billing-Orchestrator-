@@ -179,4 +179,18 @@ describe('Really Great Health Insurance Billing Orchestrator API', () => {
       assert.ok(res.body.crmOutcome);
     });
   });
+
+  describe('Routing and Fallbacks', () => {
+    test('Non-GET request to non-existent endpoint returns 404', async () => {
+      const res = await request(app).post('/api/non-existent-endpoint').send({});
+      assert.strictEqual(res.status, 404);
+      assert.strictEqual(res.body.error, 'Endpoint not found');
+    });
+
+    test('GET request to SPA route returns index.html', async () => {
+      const res = await request(app).get('/dashboard');
+      assert.strictEqual(res.status, 200);
+      assert.ok(res.text.includes('Really Great Health Insurance'));
+    });
+  });
 });

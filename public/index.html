@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Really Great Health Insurance | Medicare & Medicaid Billing Orchestrator</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Top Navigation & Brand Header -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M2 12h20" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="9" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">Really Great Health Insurance</span>
+          <span class="brand-subtitle">Medicare & Medicaid Billing Orchestrator</span>
+        </div>
+      </div>
+
+      <div class="nav-badges">
+        <div class="live-status-pill" id="crmConnectionPill">
+          <span class="status-dot"></span>
+          <span>Salesforce CRM: <strong>Connected</strong></span>
+        </div>
+        <div class="live-status-pill agent-pill" id="agentConnectionPill">
+          <span class="status-dot agent-dot"></span>
+          <span>Anthropic Agent: <strong>agent_01MPUV932QnhfsSrA51v7VY3</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="nav-tabs-wrapper">
+      <div class="nav-container tabs-flex">
+        <button class="nav-tab active" data-tab="tab-operations">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Operations Manager
+          <span class="tab-badge" id="integrationsCountBadge">6</span>
+        </button>
+
+        <button class="nav-tab" data-tab="tab-developer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          Developer API Directory
+          <span class="tab-badge" id="apiCountBadge">9</span>
+        </button>
+
+        <button class="nav-tab" data-tab="tab-crm">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Salesforce CRM (CSR View)
+          <span class="tab-badge crm-badge" id="outcomesCountBadge">2</span>
+        </button>
+
+        <button class="nav-tab" data-tab="tab-chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          Chat Console (Billing Concierge)
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: OPERATIONS MANAGER (Integrations & Friendly Names)       -->
+    <!-- ============================================================== -->
+    <section id="tab-operations" class="tab-pane active">
+      <div class="section-header">
+        <div>
+          <h2>Operations Manager: Integrations Hub</h2>
+          <p class="section-desc">
+            Monitor all upstream and downstream connections. Operations managers can review, inspect, and update friendly names so that non-technical stakeholders can easily identify systems.
+          </p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-secondary" id="btnRefreshIntegrations">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+            Refresh Status
+          </button>
+        </div>
+      </div>
+
+      <!-- Filters & Stats Bar -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Total Integrations</div>
+          <div class="metric-value" id="metricTotal">6</div>
+          <div class="metric-sub">Active in production cluster</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Salesforce Sync Status</div>
+          <div class="metric-value text-success" id="metricCrmStatus">Active</div>
+          <div class="metric-sub">Platform Events enabled</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Anthropic Agent</div>
+          <div class="metric-value text-primary">Managed Agent</div>
+          <div class="metric-sub">env_01VZxGuSVdfUjmYDfCS3Y8S8</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Operations Audit Log</div>
+          <div class="metric-value" id="metricAuditCount">1</div>
+          <div class="metric-sub">Friendly name audits logged</div>
+        </div>
+      </div>
+
+      <!-- Integrations Cards / Table -->
+      <div class="card-container">
+        <div class="card-header-bar">
+          <h3>Connected Systems & Operations Friendly Names</h3>
+          <span class="hint-text">Click "Edit Name" to update friendly name for operations</span>
+        </div>
+        <div id="integrationsList" class="integrations-grid">
+          <!-- Dynamic cards injected via app.js -->
+        </div>
+      </div>
+
+      <!-- Operations Audit Log -->
+      <div class="card-container audit-section">
+        <div class="card-header-bar">
+          <h3>Operations Manager Audit Trail</h3>
+          <span class="hint-text">Chronological log of friendly name modifications</span>
+        </div>
+        <div id="auditLogList" class="audit-list">
+          <!-- Dynamic audit log items injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: DEVELOPER PORTAL (API Directory)                         -->
+    <!-- ============================================================== -->
+    <section id="tab-developer" class="tab-pane">
+      <div class="section-header">
+        <div>
+          <h2>Developer API Directory & Interactive Explorer</h2>
+          <p class="section-desc">
+            Complete developer-ready reference for orchestrator endpoints, parameters, schemas, and live test execution.
+          </p>
+        </div>
+        <div class="section-actions">
+          <input type="text" id="apiSearchInput" class="input-search" placeholder="Search endpoints (e.g. crm, chat, integrations)..." />
+        </div>
+      </div>
+
+      <div class="developer-layout">
+        <!-- API Endpoint List -->
+        <div class="endpoints-sidebar" id="endpointsSidebar">
+          <!-- Injected via app.js -->
+        </div>
+
+        <!-- API Endpoint Details & Live Runner -->
+        <div class="endpoint-detail-panel" id="endpointDetailPanel">
+          <div class="empty-state">Select an API endpoint from the list to view specifications, cURL examples, and execute live tests.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: SALESFORCE CRM (CSR View)                                -->
+    <!-- ============================================================== -->
+    <section id="tab-crm" class="tab-pane">
+      <div class="salesforce-banner">
+        <div class="sf-banner-left">
+          <div class="sf-cloud-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sf-banner-title">Salesforce Health Cloud &mdash; Really Great Health Insurance</div>
+            <div class="sf-banner-sub">
+              Connected Org: <code>00D5e000001RGHI_PROD</code> | Workspace: <strong>Customer Service Representative (CSR) Member 360</strong>
+            </div>
+          </div>
+        </div>
+        <div class="sf-banner-right">
+          <button class="btn btn-sf" id="btnTestCrmSync">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Verify CRM Sync Bus
+          </button>
+        </div>
+      </div>
+
+      <!-- Member 360 Card -->
+      <div class="member-360-card" id="memberProfileCard">
+        <div class="member-header">
+          <div class="member-avatar">EV</div>
+          <div class="member-main-info">
+            <div class="member-name-row">
+              <h3 id="memberName">Eleanor Vance</h3>
+              <span class="tag tag-dual" id="memberDualBadge">Dual Eligible (QMB)</span>
+              <span class="tag tag-active">Active Coverage</span>
+            </div>
+            <div class="member-meta-grid">
+              <div><strong>Member ID:</strong> <span id="memberId">RGHI-MED-98421</span></div>
+              <div><strong>Medicare MBI:</strong> <span id="memberMbi">1EG4-TE5-MK72</span></div>
+              <div><strong>State Medicaid ID:</strong> <span id="memberMedicaidId">PA-MCD-998241</span></div>
+              <div><strong>DOB:</strong> <span id="memberDob">04/12/1949 (Age 77)</span></div>
+              <div><strong>Plan:</strong> <span id="memberPlanName">Really Great Health Insurance Dual Complete (HMO D-SNP)</span></div>
+              <div><strong>Active Case:</strong> <span id="memberCaseId">#00142981 - Billing & Claims Inquiries</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="member-protections-alert">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div>
+            <strong>CSR Special Notice &mdash; QMB Cost-Sharing Immunity:</strong>
+            Federal law (SSA § 1902(n)(3)(B)) strictly prohibits providers from balance-billing this member for Medicare Part A or Part B deductibles, coinsurance, or copayments. All provider liability crosses over to State Medicaid.
+          </div>
+        </div>
+      </div>
+
+      <!-- Agent Outcomes Feed for CSR -->
+      <div class="card-container">
+        <div class="card-header-bar">
+          <div>
+            <h3>Agent Outcomes for CSR</h3>
+            <p class="hint-text">
+              Real-time feed of billing determinations, clinical codes, and recommended scripts pushed by the AI Orchestrator to Salesforce Health Cloud.
+            </p>
+          </div>
+          <span class="live-sync-indicator">
+            <span class="status-dot"></span> Live Sync Enabled
+          </span>
+        </div>
+
+        <div id="csrOutcomesList" class="outcomes-feed">
+          <!-- Injected via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: CHAT CONSOLE (AI Billing Concierge)                      -->
+    <!-- ============================================================== -->
+    <section id="tab-chat" class="tab-pane">
+      <div class="chat-layout">
+        <!-- Chat Left: Conversation Window -->
+        <div class="chat-main-card">
+          <div class="chat-header">
+            <div class="chat-header-info">
+              <div class="chat-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              </div>
+              <div>
+                <h3>Medicare & Medicaid Billing Concierge</h3>
+                <span class="chat-subtitle">Powered by Anthropic Managed Agent (agent_01MPUV932QnhfsSrA51v7VY3)</span>
+              </div>
+            </div>
+            <div class="chat-auto-sync-toggle">
+              <label class="toggle-switch">
+                <input type="checkbox" id="autoSyncCrmToggle" checked />
+                <span class="slider"></span>
+              </label>
+              <span class="toggle-label">Auto-Sync Outcomes to Salesforce CRM</span>
+            </div>
+          </div>
+
+          <!-- Quick Scenario Prompts -->
+          <div class="scenario-chips-wrapper">
+            <span class="chips-label">Quick Billing Questions:</span>
+            <div class="chips-list">
+              <button class="chip-btn" data-query="Can a specialist balance-bill a QMB dual-eligible member for 20% Part B coinsurance?">
+                QMB Balance Billing
+              </button>
+              <button class="chip-btn" data-query="What is the coverage and prior authorization requirement for a CPAP machine (HCPCS E0601)?">
+                CPAP Machine (E0601)
+              </button>
+              <button class="chip-btn" data-query="Does Really Great Health Insurance cover outpatient physical therapy under our Medicare Advantage plan?">
+                Physical Therapy Coverage
+              </button>
+              <button class="chip-btn" data-query="How does secondary Medicaid coordination work for Part D low income subsidy copayments?">
+                Part D Low-Income Subsidy
+              </button>
+              <button class="chip-btn" data-query="What are the rules and deadlines for filing a Medicare Part C claim denial appeal?">
+                Appeals & Reconsideration
+              </button>
+            </div>
+          </div>
+
+          <!-- Chat Messages Area -->
+          <div class="chat-messages" id="chatMessages">
+            <div class="message-bubble agent-message">
+              <div class="message-avatar">AI</div>
+              <div class="message-content">
+                <p>Hello! I am the <strong>Really Great Health Insurance Billing Orchestrator</strong>.</p>
+                <p>I assist operations managers, CSRs, and members by analyzing Medicare (Part A, B, C, D) and Medicaid dual-eligibility billing questions, CPT/HCPCS codes, deductibles, and prior authorizations. Outcomes are automatically synced to your Salesforce Health Cloud CRM.</p>
+                <p>How can I assist with your billing inquiry today?</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Input Bar -->
+          <div class="chat-input-container">
+            <form id="chatForm" class="chat-form">
+              <textarea
+                id="chatInput"
+                class="chat-textarea"
+                rows="2"
+                placeholder="Ask any Medicare or Medicaid billing question for Really Great Health Insurance..."
+                required
+              ></textarea>
+              <button type="submit" id="btnSendChat" class="btn btn-primary btn-send">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Send
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Chat Right: Live Orchestrator Inspector -->
+        <div class="chat-inspector-card">
+          <div class="card-header-bar">
+            <h4>Live Session & CRM Sync Telemetry</h4>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">Anthropic Agent ID</div>
+            <div class="inspector-value font-mono">agent_01MPUV932QnhfsSrA51v7VY3</div>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">Environment ID</div>
+            <div class="inspector-value font-mono">env_01VZxGuSVdfUjmYDfCS3Y8S8</div>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">SDK Workflow Method</div>
+            <div class="inspector-value font-mono">client.beta.sessions.events.stream</div>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">Latest Session State</div>
+            <div class="inspector-value text-success font-mono" id="inspectorSessionStatus">session.status_idle</div>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">CRM Sync Channel</div>
+            <div class="inspector-value font-mono">/event/Billing_Agent_Outcome__e</div>
+          </div>
+
+          <div class="inspector-item">
+            <div class="inspector-label">Active Member Context</div>
+            <div class="inspector-value">Eleanor Vance (QMB Dual)</div>
+          </div>
+
+          <div class="inspector-callout">
+            <h5>CRM Sync Notice</h5>
+            <p>Every response generated by the orchestrator automatically compiles a structured clinical outcome and posts it directly to Salesforce Health Cloud for CSR visibility.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Edit Friendly Name Modal -->
+  <div class="modal-overlay" id="editModalOverlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Edit Integration Friendly Name</h3>
+        <button class="modal-close" id="btnCloseModal">&times;</button>
+      </div>
+      <form id="editFriendlyNameForm">
+        <input type="hidden" id="editIntegrationId" />
+        <div class="form-group">
+          <label>System Identifier (Technical Name):</label>
+          <input type="text" id="editSystemName" class="form-control" readonly disabled />
+        </div>
+        <div class="form-group">
+          <label for="editFriendlyNameInput">Operations Friendly Name:</label>
+          <input type="text" id="editFriendlyNameInput" class="form-control" required placeholder="e.g. Salesforce CRM Connector" />
+          <small class="form-help">Enter a recognizable name for operations managers and CSR leads.</small>
+        </div>
+        <div class="form-group">
+          <label for="editStatusSelect">Operational Status:</label>
+          <select id="editStatusSelect" class="form-control">
+            <option value="Active">Active</option>
+            <option value="Degraded">Degraded</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="btnCancelEdit">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveFriendlyName">Save Friendly Name</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "medicare-medicaid-billing-orchestrator-",
+  "version": "1.0.0",
+  "description": "A demo orchestrator for Medicare/Medicaid billing to help organizations tie all of their tools together and empower their CSRs to better support the members they serve.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/**/*.test.js",
+    "agent": "node agent_client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/komraider/Medicare-Medicaid-Billing-Orchestrator-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "supertest": "^7.3.1"
+  }
+}
